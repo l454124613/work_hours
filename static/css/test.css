@@ -1,0 +1,26 @@
+.class1{
+	  margin-left: 320;
+
+}
+
+html{
+    height: 100%;
+}
+
+body{
+    
+    height: 100%;
+}
+#header1{
+	position:fixed;
+left:0;
+ width:100%;
+ z-index:9999;
+}
+#main_con{
+	padding-top: 56px;
+}
+#dd{
+	 width:100%;
+	
+}
