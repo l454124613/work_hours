@@ -83,7 +83,7 @@ def update_user(uid):
 class User(Resource):
     def get(self, uid):
         try:
-            print(get_user_by_id(uid))
+            # print(get_user_by_id(uid))
             return get_user_by_id(uid).one().toJson()
         except Exception as e:
             return return400(e)
