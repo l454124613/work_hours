@@ -18,6 +18,7 @@ class MWorkDetail(Base):
     user_id = Column(Integer, ForeignKey('p_user.id'), index=True)
     item_id = Column(Integer, ForeignKey('p_item.id'), index=True)
     task_id = Column(Integer, ForeignKey('p_task.id'), index=True)
+    work_log_id = Column(Integer, ForeignKey('p_work_log.id'), index=True)
     status = Column(Integer, server_default="1")
 
     def __repr__(self):
