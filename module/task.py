@@ -18,6 +18,7 @@ class MTask(Base):
     level = Column(Integer)
     create_time = Column(TIMESTAMP, server_default=func.now())
     user_id = Column(Integer, ForeignKey('p_user.id'))
+    user_name = Column(String(32))
     item_id = Column(Integer, ForeignKey('p_item.id'), index=True)
     work_details = relationship('MWorkDetail', backref='task')
 
@@ -28,4 +29,4 @@ class MTask(Base):
         return {"id": self.id, "name": self.name, "plan_start_time": self.plan_start_time,
                 "plan_end_time": self.plan_end_time,
                 "status": self.status, "level": self.level, "create_time": self.create_time, "user_id": self.user_id,
-                "item_id": self.item_id, "work_details": self.work_details}
+                "item_id": self.item_id, "work_details": self.work_details, "user_name": self.user_name}

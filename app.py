@@ -3,7 +3,7 @@ import os
 from flask_restful import reqparse, abort, Api, Resource
 from controller.todo import Todo, TodoList
 from controller.login import Login
-from controller.User import User, Users,get_all_users
+from controller.User import User, Users
 from tools.token import set_user, get_token, return400, return401, return403
 from flask_cors import CORS
 
@@ -12,7 +12,6 @@ app = Flask(__name__, static_url_path='')
 app.config.update(RESTFUL_JSON=dict(ensure_ascii=False))
 api = Api(app)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
-
 
 
 @app.before_request

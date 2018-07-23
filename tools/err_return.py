@@ -7,7 +7,7 @@ def return400(msg):
     if type(msg) is dict or type(msg) is list:
         return jsonify(msg), 400
     else:
-        return {'msg': msg}, 400
+        return {'msg': str(msg)}, 400
 
 
 def return401(msg):

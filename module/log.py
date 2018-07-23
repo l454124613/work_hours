@@ -12,12 +12,13 @@ class MLog(Base):
     __tablename__ = 'p_log'
     id = Column(Integer, primary_key=True)
     method = Column(String(6))
-    path = Column(String(32))
+    path = Column(String(64))
     token = Column(String(255))
     create_time = Column(TIMESTAMP, server_default=func.now(), index=True)
     get_info = Column(Text)
     send_info = Column(Text)
     user_id = Column(Integer, ForeignKey('p_user.id'), index=True)
+    user_name = Column(String(32))
 
     def __repr__(self):
         return '%s(%r)' % (self.__class__.__name__, self.title)
@@ -25,4 +26,4 @@ class MLog(Base):
     def to_json(self):
         return {"id": self.id, "method": self.method, "path": self.path, "token": self.token,
                 "create_time": self.create_time, "get_info": self.get_info, "send_info": self.send_info,
-                "vid": self.user_id}
+                "vid": self.user_id, "user_name": self.user_name}

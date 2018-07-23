@@ -4,7 +4,7 @@ import json
 import time
 from tools.err_return import return400, return401, return403
 # from controller.User import get_all_users
-from module.user import MUsers
+# from module.user import MUser
 
 user = dict()
 

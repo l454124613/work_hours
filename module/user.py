@@ -16,6 +16,7 @@ class MUser(Base):
     vid = Column(Integer, server_default='0')
     auth_content = Column(Text)
     create_time = Column(TIMESTAMP, server_default=func.now())
+    status = Column(Integer, index=True, server_default='1')
     work_logs = relationship('MWorkLog', backref='users')
     work_details = relationship('MWorkDetail', backref='users')
     items = relationship('MItem', backref='users')

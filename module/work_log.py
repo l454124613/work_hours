@@ -15,6 +15,7 @@ class MWorkLog(Base):
     all_hours = Column(Integer, index=True)
     create_time = Column(TIMESTAMP, server_default=func.now())
     user_id = Column(Integer, ForeignKey('p_user.id'), index=True)
+    user_name = Column(String(32))
     work_details = relationship('MWorkDetail', backref='Work_logs')
     status = Column(Integer, server_default="1")
 
@@ -23,4 +24,4 @@ class MWorkLog(Base):
 
     def to_json(self):
         return {"id": self.id, "commit_date": self.commit_date, "all_hours": self.all_hours,
-                "create_time": self.create_time, "user_id": self.user_id}
+                "create_time": self.create_time, "user_id": self.user_id, "user_name": self.user_name}
