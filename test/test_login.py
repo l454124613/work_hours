@@ -14,12 +14,12 @@ token = a.headers['token']
 # print(a.status_code)
 # print(a.content)
 # print(a.text)
-# print('-----------------------------------------------------------')
-# a = requests.get('http://localhost:7788/users',
-#                  headers={'token': token})
-# print(a.status_code)
-# print(a.content)
-# print(a.text)
+print('-----------------------------------------------------------')
+a = requests.get('http://localhost:7788/users',
+                 headers={'token': token})
+print(a.status_code)
+print(a.content)
+print(a.text)
 # print('-----------------------------------------------------------')
 # a = requests.post('http://localhost:7788/users',
 #                   headers={'token': token},
@@ -34,10 +34,10 @@ token = a.headers['token']
 # print(a.status_code)
 # print(a.content)
 # print(a.text)
-print('-----------------------------------------------------------')
-a = requests.delete('http://localhost:7788/user/3',
-                  headers={'token': token}
-                  )
-print(a.status_code)
-print(a.content)
-print(a.text)
+# print('-----------------------------------------------------------')
+# a = requests.delete('http://localhost:7788/user/3',
+#                   headers={'token': token}
+#                   )
+# print(a.status_code)
+# print(a.content)
+# print(a.text)

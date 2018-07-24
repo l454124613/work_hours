@@ -13,21 +13,24 @@ def get_data_by_name(u, name):
     return session.query(u).filter_by(name=name).all()
 
 
-def create_data(u, is_check_name=None, **kwargs):
+def create_data(u, is_check_name=None, is_skip_args=False, **kwargs):
     try:
-        parser = reqparse.RequestParser()
         dd = dict()
-        for i, j in kwargs.items():
-            parser.add_argument(j)
-        args = parser.parse_args()
-        print(args)
-        if is_check_name and args[is_check_name]:
-            if len(get_data_by_name(u, args[is_check_name])) > 0:
-                return False
-        for i, j in kwargs.items():
-            dd[i] = args[j]
+        if not is_skip_args:
+            parser = reqparse.RequestParser()
+
+            for i, j in kwargs.items():
+                parser.add_argument(j)
+            args = parser.parse_args()
+            print(args)
+            if is_check_name and args[is_check_name]:
+                if len(get_data_by_name(u, args[is_check_name])) > 0:
+                    return False
+            for i, j in kwargs.items():
+                dd[i] = args[j]
+        else:
+            dd = kwargs
         re_user = u(**dd)
-        print(111)
         session.add(re_user)
         session.commit()
         return True
@@ -38,8 +41,8 @@ def create_data(u, is_check_name=None, **kwargs):
         raise Exception(e)
 
 
-def get_all_data(u, status=1):
-    users1 = session.query(u).filter_by(status=status).all()
+def get_all_data(u, status=1, filter_dict={}):
+    users1 = session.query(u).filter_by(status=status, **filter_dict).all()
     u2 = []
     for u1 in users1:
         u2.append(u1.toJson())

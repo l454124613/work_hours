@@ -4,8 +4,9 @@ from flask_restful import reqparse, abort, Api, Resource
 from controller.todo import Todo, TodoList
 from controller.login import Login
 from controller.User import User, Users
-from tools.token import set_user, get_token, return400, return401, return403
+from tools.token import set_user, get_token, return400, return401, return403, get_name_by_id
 from flask_cors import CORS
+from controller.Log import set_log
 
 app = Flask(__name__, static_url_path='')
 
@@ -16,6 +17,12 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.before_request
 def before_request():
+    g.info = {}
+
+    # print(dir(request))
+    g.info['method'] = request.method
+    g.info['path'] = request.path
+    g.info['get'] = request.data.decode('utf8')
     if '/login' == request.path or '/favicon.ico' == request.path \
             or request.path.startswith('/css/') or request.path.startswith('/js/') or '/' == request.path:
         pass
@@ -34,6 +41,8 @@ def before_request():
             else:
                 g.token = token_res
                 g.user_id = uid
+
+
         else:
             # pass
             return return400('请求内容有错误0')
@@ -47,13 +56,24 @@ def before_request():
 @app.after_request
 def after_request(response):
     # print(dir(response))
+    # print(response.data.decode('utf8'))
     # print(dir(response.expires))
+    g.info['send'] = str(response.status_code) + ',' + response.data.decode('utf8')
+    g.info['token'] = 'NO TOKEN'
+    # print(response.status_code)
     if str(response.status_code).startswith('20'):
         try:
             response.headers['Access-Control-Expose-Headers'] = 'token'
 
             response.headers['token'] = g.token
-        except:
+            g.info['token'] = g.token
+            g.info['uid'] = g.user_id
+            g.info['name'] = get_name_by_id('n' + str(g.user_id))
+            set_log(g.info['method'], g.info['path'], g.info['token'], g.info['get'], g.info['send'], g.info['uid'],
+                    g.info['name'])
+
+        except Exception as e:
+            print('app_78', e)
             pass
     # print(dir(response))
     return response

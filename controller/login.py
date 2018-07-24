@@ -17,8 +17,9 @@ class Login(Resource):
         is_ok, id = check_passwd(u, p)
         if is_ok:
 
-            _, token2, _ = get_token(user_id=id)
+            _, token2, uid = get_token(user_id=id)
             g.token = token2
+            g.user_id = uid
             return {'ok': True}
         else:
             return {'ok': False}

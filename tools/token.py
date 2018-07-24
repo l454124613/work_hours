@@ -3,10 +3,13 @@ import base64
 import json
 import time
 from tools.err_return import return400, return401, return403
+
 # from controller.User import get_all_users
 # from module.user import MUser
 
 user = dict()
+user_name = dict()
+user_name['n0'] = '尚未登录人员'
 
 
 # user['u1'] = 0
@@ -17,6 +20,7 @@ user = dict()
 def set_user(users):
     if type(users) is dict:
         user['u' + str(users['id'])] = users['vid']
+        user_name['n' + str(users['id'])] = users['name']
     elif type(users) is list:
         for u in users:
             set_user(u)
@@ -26,6 +30,10 @@ def set_user(users):
     else:
         print(type(users))
         print('没用户')
+
+
+def get_name_by_id(id):
+    return user_name.get(id)
 
 
 # def re_flash_users():
@@ -52,11 +60,11 @@ def get_token(token=None, user_id=None):
         try:
             token_dict = get_id_by_token(token)
         except:
-            return 5, '', ''
+            return 5, '', '0'
         time_status = check_time(token_dict['t'], t)
         uid = token_dict['u']
         if 'u' + str(uid) not in user.keys():
-            return 6, '', ''
+            return 6, '', uid
         vid = user['u' + str(uid)]
         is_same_vid = (vid == token_dict['v'])
         if time_status == 1 and is_same_vid:
@@ -72,7 +80,7 @@ def get_token(token=None, user_id=None):
                 return 3, '', uid
 
         elif time_status == 3:
-            return 4, '', ''
+            return 4, '', uid
         else:
             print('token46')
             pass
